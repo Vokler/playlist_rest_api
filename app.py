@@ -21,11 +21,13 @@ def token_required(func):
     return wrapper
 
 
-class User(web.View):
+class Base(web.View):
     def __init__(self, request):
         super().__init__(request)
         self.pool = self.request.app['pool']
 
+
+class User(Base):
     async def post(self):
         try:
             data = await self.request.json()
@@ -87,11 +89,7 @@ class User(web.View):
             return web.Response(status=500, body=json.dumps(result), content_type='application/json')
 
 
-class Album(web.View):
-    def __init__(self, request):
-        super().__init__(request)
-        self.pool = self.request.app['pool']
-
+class Album(Base):
     async def _get_user_id(self, token):
         async with self.pool.acquire() as connection:
             _user_id = await connection.fetchval("SELECT id FROM users WHERE api_key = '{}';".format(token))
@@ -182,11 +180,7 @@ class Album(web.View):
             return web.Response(status=500, body=json.dumps(result), content_type='application/json')
 
 
-class Track(web.View):
-    def __init__(self, request):
-        super().__init__(request)
-        self.pool = self.request.app['pool']
-
+class Track(Base):
     async def _get_user_id(self, token):
         async with self.pool.acquire() as connection:
             _user_id = await connection.fetchval("SELECT id FROM users WHERE api_key = '{}';".format(token))
