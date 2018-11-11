@@ -203,7 +203,7 @@ class Track(web.View):
             result = {
                 'message': 'Трек добавлен'
             }
-            return web.Response(body=json.dumps(result), content_type='application/json')
+            return web.Response(status=201, body=json.dumps(result), content_type='application/json')
         except Exception as e:
             result = {'message': str(e)}
             return web.Response(status=500, body=json.dumps(result), content_type='application/json')
