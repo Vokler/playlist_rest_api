@@ -75,7 +75,7 @@ class User(web.View):
                     result = {
                         'message': 'Пользователь удалён'
                     }
-                    return web.Response(body=json.dumps(result), content_type='application/json')
+                    return web.Response(status=204, body=json.dumps(result), content_type='application/json')
                 else:
                     result = {
                         'message': 'Пользователь с таким api-key уже удалён'
@@ -176,7 +176,7 @@ class Album(web.View):
                     'message': 'Альбом удалён'
                 }
 
-            return web.Response(body=json.dumps(result), content_type='application/json')
+            return web.Response(status=204, body=json.dumps(result), content_type='application/json')
         except Exception as e:
             result = {'message': str(e)}
             return web.Response(status=500, body=json.dumps(result), content_type='application/json')
@@ -266,7 +266,7 @@ class Track(web.View):
                     'message': 'Трек удалён'
                 }
 
-            return web.Response(body=json.dumps(result), content_type='application/json')
+            return web.Response(status=204, body=json.dumps(result), content_type='application/json')
         except Exception as e:
             result = {'message': str(e)}
             return web.Response(status=500, body=json.dumps(result), content_type='application/json')
